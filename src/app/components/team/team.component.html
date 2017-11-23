@@ -1,0 +1,239 @@
+<div *ngIf="showForm">
+  <div class="contact-clean">
+    <div class="container-btn-report">
+      <button (click)="viewReport(true);" class="btn btn-primary">Ver Reporte</button>
+    </div>
+    <form [formGroup]="teamForm" data-toggle="validator" role="form">
+      <h1 class="text-center">FIFA 2018</h1>
+      <h3 class="text-left">Formulario para agregar Equipos</h3>
+      <div formArrayName="team">
+        <div *ngFor="let team of teamForm.controls.team.controls; let i=index" [formGroupName]="i">
+          <div class="form-group">
+            <input class="form-control" required minlength="4" type="text" name="team-name" formControlName="nameTeam" placeholder="Nombre del Equipo"
+            />
+          </div>
+          <div class="form-group">
+            <input class="form-control" required type="text" name="country-name" formControlName="countryTeam" placeholder="Pais" />
+          </div>
+          <p class="text-left">Imagen de la Bandera</p>
+          <div class="form-group">
+            <input type="file" formControlName="flagTeam" required name="image-team" placeholder="Imagen de la bandera" />
+          </div>
+          <p class="text-left">Escudo de Equipo</p>
+          <div class="form-group">
+            <input type="file" name="image-team" required placeholder="Imagen de la bandera" />
+          </div>
+        </div>
+      </div>
+      <div formArrayName="players">
+        <div *ngFor="let player of teamForm.controls.players.controls; let i=index" [formGroupName]="i">
+          <div class="label-add">
+            <h4>Agregar Juador #{{ i + 1 }}</h4>
+          </div>
+          <div class="form-group">
+            <label>Nombre</label>
+            <input required type="text" formControlName="namePlayer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Apellido</label>
+            <input required type="text" formControlName="LastNamePlayer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Fecha de nacimiento</label>
+            <input required type="date" formControlName="datePlayer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="sel1">Posición:</label>
+            <select required class="form-control" formControlName="positionPlayer" id="sel1">
+              <option>Arquero</option>
+              <option>Defensa</option>
+              <option>Delantero</option>
+              <option>Mediocampista</option>
+          </select>
+          </div>
+          <div class="form-group">
+            <label>Numero de la camiseta</label>
+            <input required type="number" formControlName="numberShirtPlayer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="sel1">Titular:</label>
+            <select required class="form-control" formControlName="isTitular" id="sel1">
+              <option>Si</option>
+              <option>No</option>
+          </select>
+          </div>
+          <div class="form-group">
+            <label>Foto Jugador</label>
+            <input required type="file" formControlName="imagePlayer">
+          </div>
+          <button *ngIf="teamForm.controls.players.controls.length > 1" (click)="deleteRowPlayer(i)" class="btn btn-danger">Borrar Jugador</button>
+        </div>
+        <hr>
+      </div>
+
+      <button type="button" (click)="addNewRowPlayer()" class="btn btn-primary">Agregar un juegador MÁS</button><br>
+      <br>
+      <br>
+      <hr>
+      <h3 class="text-left">Datos Cuerpo Tecnico</h3>
+
+      <div formArrayName="trainers">
+        <div *ngFor="let trainer of teamForm.controls.trainers.controls; let i=index" [formGroupName]="i">
+          <div class="label-add">
+            <h4>Agregar Entrenador #{{ i + 1 }}</h4>
+          </div>
+          <div class="form-group">
+            <label>Nombre</label>
+            <input required type="text" formControlName="nameTrainer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Apellido</label>
+            <input required type="text" formControlName="LastNameTrainer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Fecha de nacimiento</label>
+            <input required type="date" formControlName="dateTrainer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Nacionalidad</label>
+            <input required type="text" formControlName="nacionalityTrainer" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="sel1">Rol:</label>
+            <select required class="form-control" formControlName="rolTrainer" id="sel1">
+              <option>Tecnico</option>
+              <option>Asistente</option>
+               <option>Médico</option>
+              <option>Preparador</option>
+          </select>
+          </div>
+          <button *ngIf="teamForm.controls.trainers.controls.length > 1" (click)="deleteRowTrainer(i)" class="btn btn-danger">Borrar miembro Tecnico</button>
+        </div>
+        <hr>
+      </div>
+
+      <button type="button" (click)="addNewRowTrainer()" class="btn btn-primary">Agregar un entrenador más</button><br>
+      <br>
+      <br>
+      <hr>
+      <div class="form-group">
+        <button type="button" class="btn btn-primary" type="submit" (click)="addTeam(teamForm.value);">Agregar Equipo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showReport">
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h3>Reporte para el Mundial 2018 -FIFA</h3>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Numero de equipos registrados</td>
+                <td>{{numberTeams}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Total de Jugadores que participarán</td>
+                <td>{{numberPlayers}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Quién es el jugador más joven</td>
+                <td>{{youngestPlayer}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>Quien es el jugador mas viejo</td>
+                <td>{{oldestPlayer}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>Cuantos jugadores suplentes hay</td>
+                <td>{{substitutePlayer}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>Promedio de número jugadores suplentes en cada equipo</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">7</th>
+                <td>Cual de los equipo fue el que más registró jugadores</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">8</th>
+                <td>Cual es la edad promedio de los jugadores</td>
+                <td>{{averageAgePlayer}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">9</th>
+                <td>Cual es el promedio de número de jugadores en cada equipo</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">10</th>
+                <td>Saber qué técnicos son de nacionalidad distinta a su equipo</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">11</th>
+                <td>Quien es el técnico mas viejo</td>
+                <td>{{oldestCouch}}</td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <th scope="row"></th>
+                <td colspan="2"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="viewReport(false);" class="btn btn-primary btn-block btn-back-report">Salir</button>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-message-confirm" *ngIf="viewAddTeam">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <p class="text-center">El equipo a quedado registrado.</p>
+        <button (click)="viewAddReport(false);" class="btn btn-info active btn-block" type="button">Agregar Otro</button>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+</div>
+
