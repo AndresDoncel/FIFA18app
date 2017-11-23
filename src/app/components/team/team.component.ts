@@ -3,7 +3,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { TeamService } from '../../services/data/team.service';
 
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, } from 'angularfire2/firestore';
@@ -21,7 +20,7 @@ export interface Post {
   selector: 'teamSelector',
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.scss'],
-  providers: [TeamService]
+
 })
 
 export class TeamComponent implements OnInit {
@@ -49,7 +48,7 @@ export class TeamComponent implements OnInit {
     private _router: Router,
     private _fb: FormBuilder,
     private afs: AngularFirestore,
-    private _teamService: TeamService,
+
   ) {
 
 
