@@ -79,18 +79,6 @@ export class TeamComponent implements OnInit {
 
   }
 
-  initItemRows() {
-    return this._fb.group({
-      namePlayer: [''],
-      LastNamePlayer: [''],
-      datePlayer: [''],
-      positionPlayer: [''],
-      numberShirtPlayer: [''],
-      isTitular: [''],
-      imagePlayer: [''],
-    });
-  }
-
   initTeam() {
     return this._fb.group({
       nameTeam: [''],
